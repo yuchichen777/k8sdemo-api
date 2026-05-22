@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8sdemo-config
+data:
+  AppSettings__AppName: "K8s Demo API"
+  AppSettings__Environment: "DEV"

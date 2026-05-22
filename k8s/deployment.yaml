@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sdemo-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8sdemo-api
+  template:
+    metadata:
+      labels:
+        app: k8sdemo-api
+    spec:
+      containers:
+        - name: k8sdemo-api
+          image: k8sdemo-api:v5
+          imagePullPolicy: Never
+          
+          envFrom:
+            - configMapRef:
+                name: k8sdemo-config
+            - secretRef:
+                name: k8sdemo-secret    
+
+          ports:
+            - containerPort: 8080
