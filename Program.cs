@@ -85,7 +85,7 @@ app.MapGet("/api/health", () =>
 {
     return Results.Ok(new
     {
-        Status = "Healthy V8",
+        Status = "Healthy V9",
         Time = DateTime.Now
     });
 });

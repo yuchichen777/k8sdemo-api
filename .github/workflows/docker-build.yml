@@ -1,4 +1,4 @@
-name: Docker Build
+name: Build And Deploy
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 
 jobs:
 
-  docker:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -32,3 +32,12 @@ jobs:
         run: |
           docker build -t yuchichen777/k8sdemo-api:latest .
           docker push yuchichen777/k8sdemo-api:latest
+
+      - name: Setup KubeConfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+
+      - name: Helm Upgrade
+        run: |
+          helm upgrade --install k8sdemo-release ./k8sdemo-chart
