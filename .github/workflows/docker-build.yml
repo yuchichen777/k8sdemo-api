@@ -1,4 +1,4 @@
-name: Build And Deploy
+name: Docker Build And Push
 
 on:
   push:
@@ -9,13 +9,10 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-
-  deploy:
-
+  docker:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -32,12 +29,3 @@ jobs:
         run: |
           docker build -t yuchichen777/k8sdemo-api:latest .
           docker push yuchichen777/k8sdemo-api:latest
-
-      - name: Setup KubeConfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
-
-      - name: Helm Upgrade
-        run: |
-          helm upgrade --install k8sdemo-release ./k8sdemo-chart
